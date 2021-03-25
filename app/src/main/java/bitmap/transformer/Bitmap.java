@@ -26,8 +26,6 @@ public class Bitmap {
                 pixel.getRed(),
                 pixel.getGreen(),
                 pixel.getBlue());
-
-        //int[] pixels = this.data.getRGB(0, 0, w, h, null, 0, 1);
     }
 
     public void saveToFile(String outputPath) throws IOException {
@@ -53,11 +51,11 @@ public class Bitmap {
       int w = this.data.getWidth();
       int rgb;
       //iterate through each row
-      for (int x = 0; x < data.getHeight(); x++) {
-        for (int y = 0; y < w / 2; y++) {
+      for (int y = 0; y < data.getHeight(); y++) {
+        for (int x = 0; x < w / 2; x++) {
           rgb = data.getRGB(x,y);
-          data.setRGB(x,y,data.getRGB(w-x,y));
-          data.setRGB(w-x,y,rgb);
+          data.setRGB(x,y,data.getRGB(w-1-x,y));
+          data.setRGB(w-1-x,y,rgb);
         }
       }
     }
