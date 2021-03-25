@@ -40,6 +40,16 @@ public class Bitmap {
     }
 
     public void mirror(){
-
+      //create tmp RGB
+      int w = this.data.getWidth();
+      int rgb;
+      //iterate through each row
+      for (int x = 0; x < data.getHeight(); x++) {
+        for (int y = 0; y < w / 2; y++) {
+          rgb = data.getRGB(x,y);
+          data.setRGB(x,y,data.getRGB(w-x,y));
+          data.setRGB(w-x,y,rgb);
+        }
+      }
     }
 }
