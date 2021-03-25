@@ -13,13 +13,9 @@ public class Bitmap {
     public Bitmap() {
     }
 
-    public void openBmp(String imgPath) {
+    public void loadFromFile(String imgPath) throws IOException {
         this.imgPath = imgPath;
-        try {
-            this.data = ImageIO.read(new File(imgPath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.data = ImageIO.read(new File(imgPath));
     }
 
     public void printPixels() {

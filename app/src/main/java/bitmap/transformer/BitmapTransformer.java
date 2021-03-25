@@ -11,10 +11,14 @@ public class BitmapTransformer {
         //TODO validate 3 args are given
         String imgPath = args[0];
         Bitmap bmp = new Bitmap();
-        bmp.openBmp(imgPath);
+        try {
+            bmp.loadFromFile(imgPath);
+        } catch (IOException e) {
+            System.out.println("File path not found!");
+        }
         bmp.printPixels();
         bmp.makeGrayscale();
-        bmp.mirror();
+        //bmp.mirror();
         try {
             bmp.saveToFile(imgPath + ".out.bmp");
         } catch (IOException e) {
