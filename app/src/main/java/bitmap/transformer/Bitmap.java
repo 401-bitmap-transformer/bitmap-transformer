@@ -3,10 +3,8 @@ package bitmap.transformer;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class Bitmap {
     BufferedImage data;
@@ -16,7 +14,7 @@ public class Bitmap {
         this.imgPath = imgPath;
     }
 
-    public void openBmp(){
+    public void openBmp() {
         try {
             this.data = ImageIO.read(new File(imgPath));
         } catch (IOException e) {
@@ -27,7 +25,7 @@ public class Bitmap {
     public void printPixels() {
         int w = this.data.getWidth();
         int h = this.data.getHeight();
-        Color pixel = new Color(data.getRGB(0,h-1));
+        Color pixel = new Color(data.getRGB(0, h - 1));
         System.out.printf("Red: %d, Green: %d, Blue %d\n",
                 pixel.getRed(),
                 pixel.getGreen(),
@@ -36,7 +34,17 @@ public class Bitmap {
         //int[] pixels = this.data.getRGB(0, 0, w, h, null, 0, 1);
     }
 
-    public void makeGray(){
+    public void makeGrayscale() {
+        for (int x = 0; x < this.data.getWidth(); x++) {
+            for (int y = 0; y < this.data.getWidth(); y++) {
+                Color pixel = new Color(data.getRGB(x, y));
+                int value = (int) (0.299 * pixel.getRed()
+                        + 0.114 * pixel.getBlue()
+                        + 0.587 * pixel.getGreen());
+                Color newPixel = new Color(value, value, value);
+                this.data.setRGB(x, y, newPixel.getRGB());
+            }
+        }
     }
 
     public void mirror(){
