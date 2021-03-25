@@ -3,7 +3,6 @@
  */
 package bitmap.transformer;
 
-import java.awt.image.Raster;
 import java.io.IOException;
 
 public class BitmapTransformer {

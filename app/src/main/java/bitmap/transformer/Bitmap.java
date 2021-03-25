@@ -46,17 +46,17 @@ public class Bitmap {
         }
     }
 
-    public void mirror(){
-      //create tmp RGB
-      int w = this.data.getWidth();
-      int rgb;
-      //iterate through each row
-      for (int y = 0; y < data.getHeight(); y++) {
-        for (int x = 0; x < w / 2; x++) {
-          rgb = data.getRGB(x,y);
-          data.setRGB(x,y,data.getRGB(w-1-x,y));
-          data.setRGB(w-1-x,y,rgb);
+    public void mirror() {
+        //create tmp RGB
+        int w = this.data.getWidth();
+        int rgb;
+        //iterate through each row
+        for (int y = 0; y < data.getHeight(); y++) {
+            for (int x = 0; x < w / 2; x++) {
+                rgb = data.getRGB(x, y);
+                data.setRGB(x, y, data.getRGB(w - 1 - x, y));
+                data.setRGB(w - 1 - x, y, rgb);
+            }
         }
-      }
     }
 }
