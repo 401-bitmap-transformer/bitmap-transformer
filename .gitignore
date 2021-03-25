@@ -1,3 +1,6 @@
+# Temporary output image file
+.out.bmp
+
 # Compiled class file
 *.class
 
