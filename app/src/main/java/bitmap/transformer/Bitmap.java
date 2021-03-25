@@ -10,11 +10,11 @@ public class Bitmap {
     BufferedImage data;
     String imgPath;
 
-    public Bitmap(String imgPath) {
-        this.imgPath = imgPath;
+    public Bitmap() {
     }
 
-    public void openBmp() {
+    public void openBmp(String imgPath) {
+        this.imgPath = imgPath;
         try {
             this.data = ImageIO.read(new File(imgPath));
         } catch (IOException e) {
@@ -32,6 +32,11 @@ public class Bitmap {
                 pixel.getBlue());
 
         //int[] pixels = this.data.getRGB(0, 0, w, h, null, 0, 1);
+    }
+
+    public void saveToFile(String outputPath) throws IOException {
+        File out = new File(outputPath);
+        ImageIO.write(this.data, "bmp", out);
     }
 
     public void makeGrayscale() {
