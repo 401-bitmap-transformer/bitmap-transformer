@@ -16,6 +16,7 @@ public class BitmapTransformer {
             System.out.println("File path not found!");
         }
         bmp.printPixels();
+        bmp.blurImage(2);
 //        bmp.makeGrayscale();
         //bmp.mirror();
         try {
