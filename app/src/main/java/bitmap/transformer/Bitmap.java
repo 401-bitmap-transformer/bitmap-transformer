@@ -1,13 +1,21 @@
 package bitmap.transformer;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Bitmap {
+    public static List<String> validTransformations = Arrays.asList(
+            "convertToGrayscale",
+            "mirrorImage",
+            "blurImage"
+    );
+
     BufferedImage data;
     String imgPath;
     int width = 0;

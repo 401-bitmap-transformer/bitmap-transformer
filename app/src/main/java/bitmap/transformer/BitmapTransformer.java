@@ -8,48 +8,58 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class BitmapTransformer {
-  public static void main(String[] args) {
-    //validate valid args are given
-    //TODO
+    public static void main(String[] args) {
+        //if arg[1] is not a string throw error
+        if (args.length > 3) {
+            System.out.println("please provide three valid arguments: 'input output transform'");
+        }
 
-    //input-file-path, output-file-path, transfrom-name
-    String imgPath = args[0];
-    String savePath = args[1];
-    String transformation = args[2];
+        //input-file-path, output-file-path, transfrom-name
+        String imgPath = args[0];
+        String savePath = args[1];
+        String transformation = args[2];
 
-    //open the file
-    Bitmap bmp = new Bitmap();
-    try {
-      bmp.loadFromFile(imgPath);
-    } catch (IOException e) {
-      System.out.println("File path not found!");
-      return;
-    }
+        //open the file
+        Bitmap bmp = new Bitmap();
+        try {
+            bmp.loadFromFile(imgPath);
+        } catch (IOException e) {
+            System.out.println("File not found!");
+            return;
+        }
 
-    //run the transformation
-    Method method;
-    try {
-      method = Bitmap.class.getDeclaredMethod(transformation);
-    } catch (NoSuchMethodException e) {
-      System.out.printf("%s is not a valid transformation use... need to fill in", transformation);
-      return;
-    }
-    try {
-      method.invoke(bmp);
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
-    }
+        //get the transformation method if valid
+        Method method;
+        try {
+            if (!Bitmap.validTransformations.contains(transformation)) {
+                System.out.printf("%s is not a valid transformation use:%s", transformation, Bitmap.validTransformations);
+                return;
+            }
+            method = Bitmap.class.getDeclaredMethod(transformation);
+        } catch (NoSuchMethodException e) {
+            System.out.printf("%s is not a valid transformation use:%s", transformation, Bitmap.validTransformations);
+            return;
+        }
 
-    //save the file
-    try {
-      bmp.saveToFile(savePath);
-    } catch (IOException e) {
-      e.printStackTrace();
+        //get run the transformation method
+        try {
+            method.invoke(bmp);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        //save the file
+        try {
+            bmp.saveToFile(savePath);
+        } catch (IOException e) {
+            System.out.printf("%s is not a valid save path", savePath);
+            return;
+        }
+
+        //return success
+        System.out.println("Complete! :)");
     }
-    //return success
-    System.out.println("Complete! :)");
-  }
 }
 
