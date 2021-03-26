@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -55,7 +53,7 @@ public class BitmapTest {
             bmp.mirrorImage();
             for (int x = 0; x < numX; x++) {
                 for (int y = 0; y < numY; y++) {
-                    assertEquals("every pixel is equal to the reflected pixel in the mirroed image",
+                    assertEquals("every pixel is equal to the reflected pixel in the mirrored image",
                             samplePixels[x][y], bmp.data.getRGB(bmp.width - 1 - x * jump, y * jump)
                     );
                 }
@@ -67,15 +65,8 @@ public class BitmapTest {
         for (String inputPath : testImages) {
             Bitmap bmp = new Bitmap();
             bmp.loadFromFile(inputPath);
-            int jump = Math.max(1, (bmp.width + bmp.height) / 20);
-            int numX = bmp.width / jump;
-            int numY = bmp.height / jump;
-            bmp.blurImage(10);
-            for (int x = 0; x < numX; x++) {
-                for (int y = 0; y < numY; y++) {
-                    bmp.data.getRGB(x * jump, y * jump);
-                }
-            }
+            bmp.blurImage();
+            assertEquals(bmp.data.getRGB(5,5), -524040);
         }
     }
 
@@ -101,13 +92,12 @@ public class BitmapTest {
     @Test public void saveToFileDoesNotThrowTest() throws Exception {
         //prep test
         String tmpFilePath = "src/test/resources/test.bmp";
-        File tmpFile = new File(tmpFilePath);
-        if(tmpFile.exists()) tmpFile.delete();
         //run test
         Bitmap bmp = new Bitmap();
         bmp.loadFromFile(validPath);
         bmp.saveToFile(tmpFilePath);
         //clean up dirs after test is ran
+        File tmpFile = new File(tmpFilePath);
         tmpFile.delete();
     }
 }

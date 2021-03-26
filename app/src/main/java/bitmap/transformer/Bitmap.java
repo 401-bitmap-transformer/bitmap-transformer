@@ -70,7 +70,8 @@ public class Bitmap {
         }
     }
 
-    public void blurImage(int radius) {
+    public void blurImage() {
+        int radius = 2;
         int[][] result = new int[width][height];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
