@@ -3,6 +3,9 @@ package bitmap.transformer;
 import org.junit.Test;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
@@ -12,6 +15,8 @@ public class BitmapTest {
     static String[] testImages = {
             "src/test/resources/img.bmp"
     };
+
+    static String validPath = "src/test/resources/img.bmp";
 
     @Test
     public void convertToGrayscaleTest() throws Exception {
@@ -74,15 +79,35 @@ public class BitmapTest {
         }
     }
 
-    @Test public void loadFromFileThrowsTest() {
+    @Test(expected = IOException.class)
+    public void loadFromFileThrowsTest() throws Exception {
+        String InvalidPath ="I'm not really here";
+        Bitmap bmp = new Bitmap();
+        bmp.loadFromFile(InvalidPath);
     }
 
-    @Test public void loadFromFileDoesNotThrowTest() {
+    @Test public void loadFromFileDoesNotThrowTest() throws Exception {
+        System.out.println(validPath);
+        Bitmap bmp = new Bitmap();
+        bmp.loadFromFile(validPath);
     }
 
-    @Test public void saveToFileThrowsTest() {
+    @Test(expected = IllegalArgumentException.class)
+    public void saveToFileThrowsNoDataTest() throws Exception {
+        Bitmap bmp = new Bitmap();
+        bmp.saveToFile("phh");
     }
 
-    @Test public void saveToFileDoesNotThrowTest() {
+    @Test public void saveToFileDoesNotThrowTest() throws Exception {
+        //prep test
+        String tmpFilePath = "src/test/resources/test.bmp";
+        File tmpFile = new File(tmpFilePath);
+        if(tmpFile.exists()) tmpFile.delete();
+        //run test
+        Bitmap bmp = new Bitmap();
+        bmp.loadFromFile(validPath);
+        bmp.saveToFile(tmpFilePath);
+        //clean up dirs after test is ran
+        tmpFile.delete();
     }
 }
