@@ -4,26 +4,52 @@
 package bitmap.transformer;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class BitmapTransformer {
-    public static void main(String[] args) {
-        //TODO validate 3 args are given
-        String imgPath = args[0];
-        Bitmap bmp = new Bitmap();
-        try {
-            bmp.loadFromFile(imgPath);
-        } catch (IOException e) {
-            System.out.println("File path not found!");
-        }
-        bmp.printPixels();
-        bmp.blurImage(2);
-//        bmp.makeGrayscale();
-        //bmp.mirror();
-        try {
-            bmp.saveToFile(imgPath + ".out.bmp");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+  public static void main(String[] args) {
+    //validate valid args are given
+    //TODO
+
+    //input-file-path, output-file-path, transfrom-name
+    String imgPath = args[0];
+    String savePath = args[1];
+    String transformation = args[2];
+
+    //open the file
+    Bitmap bmp = new Bitmap();
+    try {
+      bmp.loadFromFile(imgPath);
+    } catch (IOException e) {
+      System.out.println("File path not found!");
+      return;
     }
+
+    //run the transformation
+    Method method;
+    try {
+      method = Bitmap.class.getDeclaredMethod(transformation);
+    } catch (NoSuchMethodException e) {
+      System.out.printf("%s is not a valid transformation use... need to fill in", transformation);
+      return;
+    }
+    try {
+      method.invoke(bmp);
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    } catch (InvocationTargetException e) {
+      e.printStackTrace();
+    }
+
+    //save the file
+    try {
+      bmp.saveToFile(savePath);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    //return success
+    System.out.println("Complete! :)");
+  }
 }
 
